@@ -91,13 +91,22 @@ ex) <br>
 
 *  코디리스트의 아이디값을 입력하여 사용자의 "좋아요 리스트" 추가
 
+![AddFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/favListAfterAdded.png)
+
+* id "5ed8e1d596cb2b7ea7e51cf6"의 코디가 "좋아요 리스트"에 추가   
+
 <h3><b>좋아요 지우기</b></h3>
 
 * POST: localhost:3000/stylelists/:id/favorites/remove
 
-![removeFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/removeFavorite.png)
+![removeFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/removeFav.png)
 
 * 코디리스트의 아이디값을 입력하여 "좋아요" 제거
+
+![removeFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/afterRemoveFav.png)
+
+* "좋아요" 제거 후 "좋아요" 리스트 id "5ed8e1fe96cb2b7ea7e51cf7" 코디가 제거 됨
+
 
 **기타 사항**
 * 현재  "좋아요 지우기" 기능이 사용자의 "좋아요 리스트"에서 지워지는데에는 문제가 없으나 지워진 후 "ERR_HTTP_HEADERS_SENT" 에러 발생하면서 서버 중단 현상이 발생함(수정중).
