@@ -24,16 +24,19 @@ You will need the following things properly installed on your computer.
 
 * GET: localhost:3000/stylelists
 
-![Main page](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/stylelists.png)
+![stylelists](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/stylelists.png)
 
 <h3><b>tag 된 코디 보기</b></h3>
 
 * GET: localhost:3000/stylelists/tag
 
-ex)</br>
-<t>{	"tag": "봄"}</t>
-
 <p><t>Body Raw에 태그 값을 입력하여 입력된 태그 리스트만 뽑아 보기</t></p>
+
+![TagStylelist](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/tagStylelist.png)
+
+* ex) "봄" 태그 리스트 보기
+
+![TagStylelistEx](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/tagStylelistEx.png)
 
 ## 회원가입 및 로그인
 
@@ -41,41 +44,31 @@ ex)</br>
 
 * POST: localhost:3000/users/register
 
-ex)</br>
-  {
-	"name": "Jaejun Min",
-	"email": "test1.test.test",
-	"username": "test1",
-	"password": "123456"
-}
+![UserRegister](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userRegister.png)
 
-<h3><b>회원 인증토큰 받기</b></h3>
+
+
+<h3><b>회원 인증토큰 받아 로그인 하기 </b></h3>
 
 * POST: localhost:3000/users/authenticate
 
-ex)<br>
-<t>{
-	"username": "test1",
-	"password": "123456"
-}</t>
-
-결과 ex:<br>
-
-<t>{
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOltdLCJfaWQiOiI1ZWQ4ZTA2Yjk2Y2IyYjdlYTdlNTFjZjMiLCJuYW1lIjoiSmFlanVuIE1pbiIsImVtYWlsIjoidGVzdDEudGVzdC50ZXN0IiwidXNlcm5hbWUiOiJ0ZXN0MSIsInBhc3N3b3JkIjoiJDJiJDEwJEtsdVQ0bEJkbUZwM0NGUGVPMEZVSXVUQ0d6U2g1aFBTOVdZcGxwdDlmY2U3SVBVLnRYNVJlIiwiX192IjowLCJpYXQiOjE1OTEyNzIzOTYsImV4cCI6MTU5MTg3NzE5Nn0.H1BS-29IYcHQkF2YGGqG4dq03T8KhbEbuvdU_9LNF50"
-}</t>
+![UserAuthenticate](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userAuthenticate.png)
 
 <h3><b>인증 승인 하는 방법</b></h3>
 
 * Postman auth에 들어가서 Type을 Bearer Token으로 변경 후 위에 받은 token 값을 복사 붙여넣기.
-
 * 인증이 필요한 URL마다 같은 방식으로 인증을 진행.
-
 
 <h3><b>로그인 회원정보 보기</b></h3>
 
-
 * GET: localhost:3000/users/profile
+
+![UserProfileUnauth](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userProfile.png)
+
+![UserProfile](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userProfile.png)
+
+* 토큰을 이용해 인증하기 전 Unauthorized로 표시.
+* 인증 후 로그인 회원정보 출력.
 
 
 <h3><b>로그인된 회원의 "좋아요"한 코디 출력하기</b></h3>
@@ -85,31 +78,23 @@ ex)<br>
 ex) <br>
 <t>localhost:3000/stylelists/:id/favorites => localhost:3000/stylelists/5ed8e06b96cb2b7ea7e51cf3/favorites</t>
 
-
 * GET: localhost:3000/stylelists/:id/favorites
 
+![UserFavoriteList](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userFavoritesList.png)
 
 <h3><b>좋아요 추가하기</b></h3>
 
-
 * POST: localhost:3000/stylelists/:id/favorites/add
 
-ex)<br>
-<t>{
-	"\_id": "5ed8e1fe96cb2b7ea7e51cf7"
- }</t>
+![AddFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/addFavorite.png)
 
 *  코디리스트의 아이디값을 입력하여 사용자의 "좋아요 리스트" 추가
 
 <h3><b>좋아요 지우기</b></h3>
 
-
 * POST: localhost:3000/stylelists/:id/favorites/remove
 
-ex)<br>
-{
- "\_id": "5ed8e1fe96cb2b7ea7e51cf7"
-}
+![removeFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/removeFavorite.png)
 
 * 코디리스트의 아이디값을 입력하여 "좋아요" 제거
 
