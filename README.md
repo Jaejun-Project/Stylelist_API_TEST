@@ -63,11 +63,12 @@ You will need the following things properly installed on your computer.
 
 * GET: localhost:3000/users/profile
 
-![UserProfileUnauth](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userProfile.png)
+![UserProfileUnauth](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userProfileUnanuthorized.png)
+
+* 토큰을 이용해 인증하기 전 Unauthorized로 표시.
 
 ![UserProfile](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userProfile.png)
 
-* 토큰을 이용해 인증하기 전 Unauthorized로 표시.
 * 인증 후 로그인 회원정보 출력.
 
 
