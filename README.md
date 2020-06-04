@@ -26,6 +26,14 @@ You will need the following things properly installed on your computer.
 
 ![stylelists](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/stylelists.png)
 
+
+<h3><b>새로운 코디 등록</b></h3>
+
+* POST: localhost:3000/stylelists/register
+
+![stylelists](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/registerStylelist.png)
+
+
 <h3><b>tag 된 코디 보기</b></h3>
 
 * GET: localhost:3000/stylelists/tag
@@ -45,7 +53,6 @@ You will need the following things properly installed on your computer.
 * POST: localhost:3000/users/register
 
 ![UserRegister](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userRegister.png)
-
 
 
 <h3><b>회원 인증토큰 받아 로그인 하기 </b></h3>
@@ -93,7 +100,7 @@ ex) <br>
 
 ![AddFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/favListAfterAdded.png)
 
-* id "5ed8e1d596cb2b7ea7e51cf6"의 코디가 "좋아요 리스트"에 추가   
+* id "5ed8e1fe96cb2b7ea7e51cf7"의 코디가 "좋아요 리스트"에 추가   
 
 <h3><b>좋아요 지우기</b></h3>
 
@@ -105,7 +112,7 @@ ex) <br>
 
 ![removeFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/afterRemoveFav.png)
 
-* "좋아요" 제거 후 "좋아요" 리스트 id "5ed8e1fe96cb2b7ea7e51cf7" 코디가 제거 됨
+* "좋아요" 제거 후 "좋아요" 리스트 id "5ed8e1fe96cb2b7ea7e51cf7" 코디가 제거
 
 
 **기타 사항**
