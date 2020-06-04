@@ -11,7 +11,7 @@ You will need the following things properly installed on your computer.
 * [Postman](https://www.postman.com/)
 * npm install
 
-<h4>서버 실행</h4>
+<h3><b>서버 실행</b></h3>
 
 * nodemon index.js
 
@@ -20,30 +20,26 @@ You will need the following things properly installed on your computer.
 
 ## 코디 리스트
 
-**코디 리스트 보기**
+* GET: localhost:3000/stylelists
 
-GET: localhost:3000/stylelists
 
-**tag 된 코디 보기**
+<h3><b>tag 된 코디 보기</b></h3>
 
-GET: localhost:3000/stylelists/tag
+* GET: localhost:3000/stylelists/tag
 
-Body Raw에 태그 값을 입력하여 입력된 태그 리스트만 뽑아 보기
+ex)</br>
+\t{	"tag": "봄"}
 
-ex:
-{
-	  "tag": "봄"
-}
+<p>Body Raw에 태그 값을 입력하여 입력된 태그 리스트만 뽑아 보기</p>
 
 ## 회원가입 및 로그인
 
-**회원가입:**
+<h3><b>회원가입</b></h3>
 
-POST: localhost:3000/users/register
+* POST: localhost:3000/users/register
 
-ex)
-
-  {
+ex)</br>
+  \t{
 	"name": "Jaejun Min",
 	"email": "test1.test.test",
 	"username": "test1",
