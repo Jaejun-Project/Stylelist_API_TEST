@@ -11,7 +11,7 @@ You will need the following things properly installed on your computer.
 * [Postman](https://www.postman.com/)
 * npm install
 
-**Repository 들어가서 서버 실행**
+** 서버 실행 **
 
 * nodemon index.js
 
@@ -35,7 +35,7 @@ ex:
 	  "tag": "봄"
 }
 
-##회원가입 및 로그인
+## 회원가입 및 로그인
 
 **회원가입:**
 
@@ -104,11 +104,10 @@ ex): {
 POST: localhost:3000/stylelists/:id/favorites/remove
 
 {
- "_id": "5ed8e1fe96cb2b7ea7e51cf7"
+ "\_id": "5ed8e1fe96cb2b7ea7e51cf7"
 }
 
 * 코디리스트의 아이디값을 입력하여 "좋아요" 제거
 
 **기타 사항**
-* 현재  "좋아요 지우기" 지워지기는 하나  </br>
-  "ERR_HTTP_HEADERS_SENT" 에러 발생하면서 서버 중단 현상이 생겨서 수정 중입니다.
+* 현재  "좋아요 지우기" 기능이 사용자의 "좋아요" 리스트에서 지워지는데는 문제가 없으나 지워진 후 "ERR_HTTP_HEADERS_SENT" 에러 발생하면서 서버 중단 현상이 생겨서 수정 중입니다.
