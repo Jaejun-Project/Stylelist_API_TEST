@@ -89,13 +89,14 @@ ex) <br>
 
 
 <h3><b>좋아요 추가하기</b></h3>
-**좋아요 추가하기**
+
 
 * POST: localhost:3000/stylelists/:id/favorites/add
 
-ex): {
+ex)<br>
+<t>{
 	"\_id": "5ed8e1fe96cb2b7ea7e51cf7"
- }
+ }</t>
 
 *  코디리스트의 아이디값을 입력하여 "좋아요" 추가
 
@@ -104,6 +105,7 @@ ex): {
 
 * POST: localhost:3000/stylelists/:id/favorites/remove
 
+ex)<br>
 {
  "\_id": "5ed8e1fe96cb2b7ea7e51cf7"
 }
