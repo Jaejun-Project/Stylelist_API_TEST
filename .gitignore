@@ -8,7 +8,6 @@ pids
 *.seed
 *.tmp
 *.dat
-*.png
 test*.*
 output
 
