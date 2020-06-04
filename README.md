@@ -24,6 +24,7 @@ You will need the following things properly installed on your computer.
 
 * GET: localhost:3000/stylelists
 
+![Main page](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/stylelists.png)
 
 <h3><b>tag 된 코디 보기</b></h3>
 
