@@ -66,11 +66,11 @@ module.exports.addFavorite = function(currentUser,id, callback){
 };
 
 module.exports.removeFavorite = function(currentUser,callback){
-
-   currentUser.save(callback);
-
+    // console.log("inside Favorite");
+   currentUser.save(currentUser, callback);
 };
 
 module.exports.isFavorite = function(currentUser, callback){
+
   User.findById(currentUser._id, callback).populate('favorites');
 };

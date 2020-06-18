@@ -41,10 +41,10 @@ router.post('/:id/favorites/add', passport.authenticate('jwt', {session:false}),
     //increase favorite count by 1
     Stylelist.addFavoritesCount(stylelistId, (err, stylelistId) =>{
       if(err){
-        console.log("err occured");
+        // console.log("err occured");
         res.json({success: false, msg: "error from add favorite count"});
       }else{
-        res.json({success: true, msg: 'Increased favorites count by 1'});
+       return res.json({success: true, msg: 'Increased favorites count by 1'});
       }
     });
 
@@ -77,42 +77,48 @@ router.post('/:id/favorites/remove', passport.authenticate('jwt', {session:false
   let stylelistId = req.body._id;
 
   let currentUser = req.user;
+  // console.log(currentUser);
   if(stylelistId == null){
     res.json({success: false, msg: "empty data"})
   }
+
   if(currentUser.favorites.indexOf(stylelistId) >= 0){
     currentUser.favorites.pull(stylelistId);
-    console.log("hihi");
-    Stylelist.removeFavoritesCount(stylelistId, (err, stylelistId) =>{
-
-        if(err){
-          console.log("err occured");
-          res.json({success: false, msg: "error from descreasing favorite count"});
-        }else{
-          res.json({success: true, msg: 'Decreased favorites count by 1'});
+    // console.log(stylelistId);
+    // Stylelist.removeFavoritesCount(stylelistId);
+      // (err, ) =>{
+      // if(err){
+      //   // console.log("err occured");
+      //   return res.status(400).json({success: false, msg: "error from descreasing favorite count"});
+      // }else{
+      //   return res.status(200).json({success: true, msg: 'Decreased favorites count by 1'});
+      //   // console.log("succed occured");
+      // }
+    // });
+    User.removeFavorite(currentUser, (err, currentUser) =>{
+      // console.log(currentUser);
+      
+      if(err){
+        res.status(400).json({success: false, msg: "err from delete fav"});
+      }else{
+        res.status(200).json({
+          success: true,
+          msg: "remove from favorite list",
+          user: {
+            id: currentUser._id,
+            name: currentUser.name,
+            username: currentUser.username,
+            email: currentUser.email,
+            favorites: currentUser.favorites
         }
-      });
-
-      User.removeFavorite(currentUser, (err, currentUser) =>{
-        if(err){
-          res.status(400).json({success: false, msg: "err from delete fav"});
-        }else{
-          res.status(200).json({
-            success: true,
-            msg: "remove from favorite list",
-            user: {
-                id: currentUser._id,
-                name: currentUser.name,
-                username: currentUser.username,
-                email: currentUser.email,
-                favorites: currentUser.favorites
-            }
-          });
-        }
-      });
+        });
+        Stylelist.removeFavoritesCount(stylelistId);
+      }
+    });
   }else{
-    res.json({success: false, msg: "already in the favorite list"});
+    res.json({success: false, msg: "Not in favorite list"});
   }
+  // res.json("error:" +  err);
 });
 
 
@@ -149,8 +155,8 @@ router.get('/', (req,res, next) =>{
 });
 
 //show stylelists by tag name
-router.get('/tag', (req, res, next) =>{
-  let stylelistByTag = req.body.tag;
+router.get('/:tag_name', (req, res, next) =>{
+  let stylelistByTag = req.param.tag;
   Stylelist.getStylelistByTag(stylelistByTag, function(err, stylelistByTag){
     if(err){
       console.log(err);
