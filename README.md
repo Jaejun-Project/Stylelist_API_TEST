@@ -24,27 +24,27 @@ You will need the following things properly installed on your computer.
 
 * GET: localhost:3000/stylelists
 
-![stylelists](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/stylelists.png)
+![stylelists](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/stylelists.png)
 
 
 <h3><b>새로운 코디 등록</b></h3>
 
 * POST: localhost:3000/stylelists/register
 
-![stylelists](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/registerStylelist.png)
+![stylelists](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/registerStylelist.png)
 
 
 <h3><b>tag 된 코디 보기</b></h3>
 
-* GET: localhost:3000/stylelists/tag
+* GET: localhost:3000/stylelists/:tag
 
 <p><t>Body Raw에 태그 값을 입력하여 입력된 태그 리스트만 뽑아 보기</t></p>
 
-![TagStylelist](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/tagStylelist.png)
+![TagStylelist](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/tag.png)
 
-* ex) "봄" 태그 리스트 보기
+* ex) "훈남" 태그 리스트 보기
 
-![TagStylelistEx](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/tagStylelistEx.png)
+![TagStylelistEx](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/tagEx.png)
 
 ## 회원가입 및 로그인
 
@@ -52,14 +52,14 @@ You will need the following things properly installed on your computer.
 
 * POST: localhost:3000/users/register
 
-![UserRegister](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userRegister.png)
+![UserRegister](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/userRegister.png)
 
 
 <h3><b>회원 인증토큰 받아 로그인 하기 </b></h3>
 
 * POST: localhost:3000/users/authenticate
 
-![UserAuthenticate](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userAuthenticate.png)
+![UserAuthenticate](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/userAuthenticate.png)
 
 <h3><b>인증 승인 하는 방법</b></h3>
 
@@ -70,11 +70,11 @@ You will need the following things properly installed on your computer.
 
 * GET: localhost:3000/users/profile
 
-![UserProfileUnauth](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userProfileUnanuthorized.png)
+![UserProfileUnauth](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/userProfileUnanuthorized.png)
 
 * 토큰을 이용해 인증하기 전 Unauthorized로 표시.
 
-![UserProfile](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userProfile.png)
+![UserProfile](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/userProfile.png)
 
 * 인증 후 로그인 회원정보 출력.
 
@@ -88,28 +88,28 @@ ex) <br>
 
 * GET: localhost:3000/stylelists/:id/favorites
 
-![UserFavoriteList](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/userFavoritesList.png)
+![UserFavoriteList](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/userFavoritesList.png)
 
 <h3><b>좋아요 추가하기</b></h3>
 
-* POST: localhost:3000/stylelists/:id/favorites/add
+* POST: localhost:3000/stylelists/:id/favorites/:favId
 
-![AddFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/addFavorite.png)
+![AddFavorite](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/addFavorite.png)
 
 *  코디리스트의 아이디값을 입력하여 사용자의 "좋아요 리스트" 추가
 
-![AddFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/favListAfterAdded.png)
+![AddFavorite](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/favListAfterAdded.png)
 
 * id "5ed8e1fe96cb2b7ea7e51cf7"의 코디가 "좋아요 리스트"에 추가   
 
 <h3><b>좋아요 지우기</b></h3>
 
-* POST: localhost:3000/stylelists/:id/favorites/remove
+* DELETE: localhost:3000/stylelists/:id/favorites/:favId
 
-![removeFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/removeFav.png)
+![removeFavorite](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/beforeDeleteFav.png)
 
 * 코디리스트의 아이디값을 입력하여 "좋아요" 제거
 
-![removeFavorite](https://github.com/Jaejun-Project/Lvl13_API_TEST/blob/master/lvl13img/afterRemoveFav.png)
+![removeFavorite](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/deleteFav.png)
 
 * "좋아요" 제거 후 "좋아요" 리스트 id "5ed8e1fe96cb2b7ea7e51cf7" 코디가 제거

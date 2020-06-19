@@ -4,80 +4,90 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const passport = require('passport');
+const bcrypt = require('bcrypt');
 
-// passport.authenticate('jwt', {session:false})
 
-// app.get('validate',)
 
-router.post('/register', (req, res, next) => {
-    let newUser = new User ({
-        name: req.body.name,
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password
-    });
+// module.exports.addUser = function(newUser, callback){
+//     bcrypt.genSalt(10,(err, salt)=>{
+//         bcrypt.hash(newUser.password, salt, (err, hash) => {
+//             if(err) throw err;
+//             console.log("password + : " + newUser.password);
+//             newUser.password = hash;
+//             newUser.save(callback);
+//         });
+//     });
+// }
+router.post('/register', async (req, res) => {
 
-   User.addUser(newUser, (err, newUser) => {
-       if (err) {
-            console.log("err occured ");
-            res.json({success: false, msg:'Failed to register user'});
-       }else {
-            res.json({success: true, msg: 'User registered'});
-       }
-   });
-});
-
-router.get('/', (req,res, next) =>{
-  User.getUsers( function(err, users){
-    if(err){
-      console.log(err);
-    }else{
-      res.json(users);
+    try{
+        let newUser = new User ({
+            name: req.body.name,
+            email: req.body.email,
+            username: req.body.username,
+            password: req.body.password
+        });
+        //Add hash to password
+            const saltRounds = 10;
+            const salt =  bcrypt.genSaltSync(saltRounds);
+            const hash =  bcrypt.hashSync(newUser.password, salt);
+            newUser.password =  hash;
+            console.log(newUser.password);
+            const user = await newUser.save();
+            res.json(user);
+     }
+    catch(err){
+        return res.json({success: false, msg: err.message});
     }
-  });
 });
 
-router.post('/authenticate', (req,res, next) => {
+router.get('/', async (req,res) =>{
+    try{
+        const users = await User.find();
+        res.json(users);
+    }catch(err){
+        res.status(400).json(err);
+    }
+});
+
+router.post('/authenticate', async (req,res, next) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    User.getUserByUsername(username, (err, user) => {
-        if(err) throw err;
-        if(!user){
-            return res.json({ success: false, msg: 'User not found'});
+    // const query = {username: username};
+    // User.findOne(query, callback);
+    try{
+        const user =  await User.findOne({username: username});
+        const isMatch =  await bcrypt.compare(password, user.password);
+        console.log(isMatch);
+        if(isMatch){
+            // console.log("from user.js "  + config.secret);
+            // console.log(user);
+            const token = jwt.sign(user.toJSON(), config.secret, {
+                expiresIn: 604800 // 1 week
+            });
+            return res.json({
+                success: true,
+                token: token,
+                // reconstruct the user to hide password
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    username: user.username,
+                    email: user.email
+                }
+            });      
+        }else{
+            return res.json({success: false, msg: 'Wrong password'});
         }
-
-        User.comparePassword(password, user.password, (err, isMatch) => {
-            if(err) {
-                // console.log("errorrorro");
-                throw err; }
-            if(isMatch){
-                console.log("from user.js "  + config.secret);
-                // console.log(user);
-                const token = jwt.sign(user.toJSON(), config.secret, {
-                    expiresIn: 604800 // 1 week
-                });
-                res.json({
-                    success: true,
-                    token: token,
-                    // reconstruct the user to hide password
-                    user: {
-                        id: user._id,
-                        name: user.name,
-                        username: user.username,
-                        email: user.email
-                    }
-                });
-            }else{
-                return res.json({success: false, msg: 'Wrong password'});
-            }
-        });
-    });
+    }catch{
+        return res.status(404).json({ success: false, msg: 'User not found'}); 
+    }
 });
 
-router.get('/profile', passport.authenticate('jwt',{session: false}), (req, res, next) => {
+router.get('/profile', passport.authenticate('jwt',{session: false}),  (req, res) => {
     // res.send("This is profile page");
-    console.log("heelo" + req.user);
+    console.log("Hello" + req.user);
     res.json({user: req.user});
 });
 

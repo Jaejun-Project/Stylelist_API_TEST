@@ -7,164 +7,142 @@ const passport = require('passport');
 
 
 //register new style into stylelist
-router.post('/register', (req, res, next) => {
+router.post('/register', async (req, res) => {
+ 
+  try{
     let newStylelist = new Stylelist ({
-        title: req.body.title,
-        imagePath: req.body.imagePath,
-        description: req.body.description,
-        favoritesCount: req.body.favoritesCount,
-        tag: req.body.tag
+      title: req.body.title,
+      imagePath: req.body.imagePath,
+      description: req.body.description,
+      favoritesCount: req.body.favoritesCount,
+      tag: req.body.tag
     });
-   Stylelist.addStylelist(newStylelist, (err, newStylelist) => {
-       if (err) {
-            console.log("err occured ");
-            res.json({success: false, msg:'Failed to add new styles'});
-       }else {
-            res.json({success: true, msg: 'added new styles'});
-       }
-   });
+    const stylelist = await newStylelist.save();
+    console.log(stylelist);
+    res.json({success: true, msg: 'added new styles'});
+  }
+  catch(err){
+    console.log("err occured ");
+    res.json({success: false, msg:'Failed to add new styles'});
+  }
 });
 
 
 // only logged in user can add stylelist to favorite list
-router.post('/:id/favorites/add', passport.authenticate('jwt', {session:false}), (req,res,next)=>{
-  let stylelistId = req.body._id;
+router.post('/:id/favorites/:favId', passport.authenticate('jwt', {session:false}), async (req,res)=>{
+  let stylelistId = req.params.favId;
   let currentUser = req.user;
-  // console.log(stylelistId);
-  if(stylelistId == null){
-    res.json({success: false, msg: "empty data"})
-  }
-//check whether stylelist is already added to favoriete list
-  if(currentUser.favorites.indexOf(stylelistId) === -1){
-    currentUser.favorites.push(stylelistId);
 
-    //increase favorite count by 1
-    Stylelist.addFavoritesCount(stylelistId, (err, stylelistId) =>{
-      if(err){
-        // console.log("err occured");
-        res.json({success: false, msg: "error from add favorite count"});
-      }else{
-       return res.json({success: true, msg: 'Increased favorites count by 1'});
-      }
-    });
+  try{
+    if(stylelistId == null){
+      throw err;
+    }
 
-    //add stylelist to user's favorite list
-    User.addFavorite(currentUser, (err, currentUser) =>{
-      if(err){
-        res.json({success: false, msg: "err from addFavor"});
-      }else{
-        res.json({
-          success: true,
-          msg: "add to favorite list",
-          user: {
-              id: currentUser._id,
-              name: currentUser.name,
-              username: currentUser.username,
-              email: currentUser.email,
-              favorites: currentUser.favorites
-          }
-        });
+    if(currentUser.favorites.indexOf(stylelistId) === -1){
+      currentUser.favorites.push(stylelistId);
+      await currentUser.save();
+      await Stylelist.findOneAndUpdate({ _id: stylelistId },{ $inc: { "favoritesCount" : 1 } });
+      res.status(200).json({
+        success: true,
+        msg: "add from favorite list",
+        user: {
+          id: currentUser._id,
+          name: currentUser.name,
+          username: currentUser.username,
+          email: currentUser.email,
+          favorites: currentUser.favorites
       }
-    });
-  }else{
-    res.json({success: false, msg: "already in the favorite list"});
+      });
+    }
+    else{
+      throw err;
+    }
+  }catch (err){
+    res.json(err);
   }
 });
 
 //remove from fav list
 
-router.post('/:id/favorites/remove', passport.authenticate('jwt', {session:false}), (req,res,next)=>{
-  let stylelistId = req.body._id;
-
+router.delete('/:id/favorites/:favId', passport.authenticate('jwt', {session:false}), async(req,res)=>{
+  let stylelistId = req.params.favId;
   let currentUser = req.user;
-  // console.log(currentUser);
-  if(stylelistId == null){
-    res.json({success: false, msg: "empty data"})
-  }
 
-  if(currentUser.favorites.indexOf(stylelistId) >= 0){
-    currentUser.favorites.pull(stylelistId);
-    // console.log(stylelistId);
-    // Stylelist.removeFavoritesCount(stylelistId);
-      // (err, ) =>{
-      // if(err){
-      //   // console.log("err occured");
-      //   return res.status(400).json({success: false, msg: "error from descreasing favorite count"});
-      // }else{
-      //   return res.status(200).json({success: true, msg: 'Decreased favorites count by 1'});
-      //   // console.log("succed occured");
-      // }
-    // });
-    User.removeFavorite(currentUser, (err, currentUser) =>{
-      // console.log(currentUser);
-      
-      if(err){
-        res.status(400).json({success: false, msg: "err from delete fav"});
-      }else{
-        res.status(200).json({
-          success: true,
-          msg: "remove from favorite list",
-          user: {
-            id: currentUser._id,
-            name: currentUser.name,
-            username: currentUser.username,
-            email: currentUser.email,
-            favorites: currentUser.favorites
-        }
-        });
-        Stylelist.removeFavoritesCount(stylelistId);
-      }
-    });
-  }else{
-    res.json({success: false, msg: "Not in favorite list"});
-  }
-  // res.json("error:" +  err);
-});
-
-
-//show all favorite list of current user
-router.get('/:id/favorites', passport.authenticate('jwt', {session:false}), (req,res,next)=>{
-  let stylelistId = req.body._id;
-  let currentUser = req.user;
-  // console.log(stylelistId);
-  User.isFavorite(currentUser, (err, currentUser) =>{
-    if(err){
-        res.json({success: false, msg: "err"});
-    }else{
-      res.json({
-        success: true,
-        msg: "Display user's favorite stylelist",
-        username: currentUser.username,
-        favorites: currentUser.favorites
-       });
+  try{
+    if(stylelistId == null){
+      throw err;
     }
-  })
+    if(currentUser.favorites.indexOf(stylelistId) >= 0){
+      currentUser.favorites.pull(stylelistId);
+      await currentUser.save();
+      await Stylelist.findOneAndUpdate({ _id: stylelistId },{ $inc: { "favoritesCount" : -1 } });
+      res.status(200).json({
+        success: true,
+        msg: "remove from favorite list",
+        user: {
+          id: currentUser._id,
+          name: currentUser.name,
+          username: currentUser.username,
+          email: currentUser.email,
+          favorites: currentUser.favorites
+      }
+      });
+    }
+    else{
+      throw err;
+    }
+
+  }catch(err){
+     res.json(err.message);
+  }
+
 });
 
-
+router.get('/:id/favorites', passport.authenticate('jwt', {session:false}), async (req,res)=>{
+  let stylelistId = req.params.id;
+  // let currentUser = req.user;
+  try{
+    stylelistId
+    let currUserFavorites = await User.findById(stylelistId).populate('favorites');
+    res.status(200).json({
+      success: true,
+      msg: "Display user's favorite stylelist",
+      username: currUserFavorites.username,
+      favorites: currUserFavorites.favorites
+     });
+  }
+  catch(err){
+    res.status(400).json(err.message);
+  }
+});
 
 //show all stylelists
-router.get('/', (req,res, next) =>{
-  Stylelist.getStylelists( function(err, stylelists){
-    if(err){
-      console.log(err);
-    }else{
-      res.json(stylelists);
-    }
-  });
+router.get('/', async (req,res, next) =>{
+  try{
+    const stylelists =  await Stylelist.find();
+    console.log(stylelists);
+    res.status(200).json(stylelists);
+  }catch(error){
+    console.log('Error', error.message);
+    res.json('Error', error.message);
+  }
 });
 
 //show stylelists by tag name
-router.get('/:tag_name', (req, res, next) =>{
-  let stylelistByTag = req.param.tag;
-  Stylelist.getStylelistByTag(stylelistByTag, function(err, stylelistByTag){
-    if(err){
-      console.log(err);
-      res.json({success: false, msg: "does not exist or something went wrong"});
+router.get('/:tag', async (req, res, next) =>{
+  let tag = req.params.tag;
+  try{
+    let stylelistByTag = await Stylelist.find({tag: tag});
+    console.log(stylelistByTag);
+    if(stylelistByTag.length <=0 ){
+      res.status(404).json("Not exist")
     }else{
-      res.json(stylelistByTag);
+      res.status(200).json(stylelistByTag);
     }
-  });
+  }catch(error){
+    console.log(err);
+    res.status(400).json({success: false, msg: "does not exist or something went wrong"});
+  }
 });
 
 module.exports = router;
