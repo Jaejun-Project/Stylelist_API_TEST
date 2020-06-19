@@ -38,7 +38,7 @@ You will need the following things properly installed on your computer.
 
 * GET: localhost:3000/stylelists/:tag
 
-<p><t>Body Raw에 태그 값을 입력하여 입력된 태그 리스트만 뽑아 보기</t></p>
+<p><t>Pre-request Script에 태그 값을 입력하여 입력된 태그 리스트만 뽑아 보기</t></p>
 
 ![TagStylelist](https://github.com/Jaejun-Project/Stylelist_API_TEST/blob/master/img/tag.png)
 
